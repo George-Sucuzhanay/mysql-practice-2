@@ -80,16 +80,47 @@ OR (area > 3000000 AND population <= 250000000);
 SELECT name, ROUND(population/1000000, 2), ROUND(GDP/ 1000000000, 2) FROM world
 WHERE continent = 'South America';
 
---Show the name and per-capita GDP for those countries with a GDP of at least one trillion (1000000000000; that is 12 zeros). Round this value to the nearest 1000.
-
-Show per-capita GDP for the trillion dollar countries to the nearest $1000.
+--Show the name and per-capita GDP for those countries with a GDP of at least one trillion (1000000000000; that is 12 zeros). Round this value to the nearest 1000. Show per-capita GDP for the trillion dollar countries to the nearest $1000.
 SELECT name, round(gdp/population,-3)FROM world
 WHERE gdp >= 1000000000000;
 
+-- Show the name and capital where the name and the capital have the same number of characters.
+SELECT name,capital FROM world WHERE LEN(name) = LEN(capital);
+
+-- Show the name and the capital where the first letters of each match. Don't include countries where the name and the capital are the same word.
+SELECT name, capital FROM world WHERE LEFT(name, 1) = LEFT(capital,1) AND name != capital;
+
+-- Find the country that has all the vowels and no spaces in its name.
+-- 13
+SELECT name FROM world WHERE name LIKE '%a%'AND name LIKE '%e%' and name LIKE '%i%' and name LIKE '%o%' and name LIKE '%u%' AND name NOT LIKE '_';
 
 
 -- Section 3: From Nobel
 
+--Change the query shown so that it displays Nobel prizes for 1950.
 
+SELECT yr, subject, winner FROM nobel WHERE yr = 1950;
 
+-- Show who won the 1962 prize for literature.
+SELECT winner FROM nobel WHERE yr = 1962 AND subject = 'literature';
 
+-- Give the name of the 'peace' winners since the year 2000, including 2000.
+SELECT winner FROM nobel WHERE subject = 'peace' AND yr >= 2000;
+
+-- Show all details (yr, subject, winner) of the literature prize winners for 1980 to 1989 inclusive.
+SELECT yr, subject, winner FROM nobel WHERE subject = 'literature'AND yr >= 1980 AND yr <= 1989;
+
+-- Show all details of the presidential winners:
+SELECT * FROM nobel
+ WHERE winner IN ('Theodore Roosevelt',
+                  'Woodrow Wilson',
+                  'Jimmy Carter','Barack Obama');
+
+-- Show the winners with first name John
+SELECT winner FROM nobel WHERE winner LIKE 'John%';
+
+-- Show the year, subject, and name of physics winners for 1980 together with the chemistry winners for 1984.
+SELECT yr, subject, winner FROM nobel WHERE subject = 'Physics' AND yr = 1980 OR subject = 'Chemistry' AND yr = 1984;
+
+-- Show the year, subject, and name of winners for 1980 excluding chemistry
+SELECT yr, subject, winner FROM nobel WHERE yr = 1980 AND subject NOT IN ('Chemistry');
