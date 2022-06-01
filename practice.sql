@@ -124,3 +124,12 @@ SELECT yr, subject, winner FROM nobel WHERE subject = 'Physics' AND yr = 1980 OR
 
 -- Show the year, subject, and name of winners for 1980 excluding chemistry
 SELECT yr, subject, winner FROM nobel WHERE yr = 1980 AND subject NOT IN ('Chemistry');
+
+--Website says this is right but its actually the one down below
+SELECT * FROM nobel WHERE yr = 1980 AND subject NOT IN ('Chemistry', 'Medicine')
+
+-- Show year, subject, and name of people who won a 'Medicine' prize in an early year
+-- (before 1910, not including 1910) together with winners of a 'Literature' prize in a later year
+-- (after 2004, including 2004)
+SELECT * FROM nobel WHERE subject = 'Medicine' AND yr < 1910 OR subject = 'Literature' AND yr >= 2004;
+
